@@ -17,15 +17,21 @@ import torch.nn.functional as F
 from torchvision import datasets, models, transforms
 from torch.utils.data import DataLoader, Dataset
 
+
 import numpy as np
 
 from PIL import Image
 
 import os
 import glob
+import zipfile
+data_zip_path = "./alls/output.zip"
+# Open the zip file
+with zipfile.ZipFile(data_zip_path, "r") as zip_file:
+    # Extract the contents of the zip file to the "extracted" directory
+    zip_file.extractall()
 
-# !unzip cats_and_dogs_filtered.zip
-
+print("done01")
 # Chọn thiết bị để huấn luyện mô hình
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
@@ -47,6 +53,7 @@ test_list_cats = glob.glob(os.path.join(test_dogs_dir, '*.jpg'))
 
 test_list = test_list_dogs + test_list_cats
 
+print("done1")
 # Hàm load dataset
 class CustomImageDataset(Dataset):
     def __init__(self, img_list, transform):
@@ -89,7 +96,7 @@ print('Number of validation: {}'.format(len(test_data)))
 
 train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
 test_dataloader = DataLoader(test_data, batch_size=64, shuffle=True)
-
+print("done2")
 # Viết model
 class CNN(nn.Module):
     def __init__(self):
@@ -139,6 +146,7 @@ model.to(device)
 learning_rate = 0.001
 epochs = 30
 
+print("done3")
 # Viết hàm train và hàm test
 def train_loop(dataloader, model, loss_fn, optimizer):
     size = len(dataloader.dataset)

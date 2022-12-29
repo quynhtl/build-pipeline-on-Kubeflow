@@ -25,12 +25,20 @@ from PIL import Image
 import os
 import glob
 import zipfile
-data_zip_path = "./data_zip.zip"
-# Open the zip file
-with zipfile.ZipFile(data_zip_path, "r") as zip_file:
-    # Extract the contents of the zip file to the "extracted" directory
-    zip_file.extractall()
+import argparse
 
+# Parse command line arguments
+parser = argparse.ArgumentParser()
+parser.add_argument('--input_file', required=True, help='Path to the input zip file')
+parser.add_argument('--output_file', required=True, help='Path to the output file')
+args = parser.parse_args()
+
+# Unzip the input file
+import zipfile
+with zipfile.ZipFile(args.input_file, 'r') as zip_ref:
+    zip_ref.extractall('data_input')
+
+print("done01")
 # Chọn thiết bị để huấn luyện mô hình
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
@@ -52,7 +60,7 @@ test_list_cats = glob.glob(os.path.join(test_dogs_dir, '*.jpg'))
 
 test_list = test_list_dogs + test_list_cats
 
-print("done1")
+print("done2")
 # Hàm load dataset
 class CustomImageDataset(Dataset):
     def __init__(self, img_list, transform):
@@ -95,7 +103,7 @@ print('Number of validation: {}'.format(len(test_data)))
 
 train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
 test_dataloader = DataLoader(test_data, batch_size=64, shuffle=True)
-print("done2")
+print("done3")
 # Viết model
 class CNN(nn.Module):
     def __init__(self):
@@ -145,7 +153,7 @@ model.to(device)
 learning_rate = 0.001
 epochs = 30
 
-print("done3")
+print("done4")
 # Viết hàm train và hàm test
 def train_loop(dataloader, model, loss_fn, optimizer):
     size = len(dataloader.dataset)
