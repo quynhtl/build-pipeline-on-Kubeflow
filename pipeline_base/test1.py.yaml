@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: my-first-pipeline-
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18, pipelines.kubeflow.org/pipeline_compilation_time: '2022-12-29T07:44:19.423550',
+    pipelines.kubeflow.org/pipeline_spec: '{"description": "A hello world pipeline.",
+      "name": "my-first-pipeline"}'}
+  labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.18}
+spec:
+  entrypoint: my-first-pipeline
+  templates:
+  - name: echo-op
+    container:
+      args: []
+      command:
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf "%s" "$0" > "$program_path"
+        python3 -u "$program_path" "$@"
+      - |
+        def echo_op():
+            print("Hello world")
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog='Echo op', description='')
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = echo_op(**_parsed_args)
+      image: python:3.7
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.18
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: "true"
+      annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
+          {"args": [], "command": ["sh", "-ec", "program_path=$(mktemp)\nprintf \"%s\"
+          \"$0\" > \"$program_path\"\npython3 -u \"$program_path\" \"$@\"\n", "def
+          echo_op():\n    print(\"Hello world\")\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=''Echo
+          op'', description='''')\n_parsed_args = vars(_parser.parse_args())\n\n_outputs
+          = echo_op(**_parsed_args)\n"], "image": "python:3.7"}}, "name": "Echo op"}',
+        pipelines.kubeflow.org/component_ref: '{}'}
+  - name: my-first-pipeline
+    dag:
+      tasks:
+      - {name: echo-op, template: echo-op}
+  arguments:
+    parameters: []
+  serviceAccountName: pipeline-runner

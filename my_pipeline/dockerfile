@@ -1,0 +1,17 @@
+FROM python:3.7 
+FROM pytorch/pytorch:1.12.1-cuda11.3-cudnn8-runtime
+
+
+COPY requirement.txt .
+RUN python3 -m pip install -r requirement.txt --no-cache-dir
+
+COPY /alls .
+
+COPY ./dummy-mles.json .
+ENV GOOGLE_APPLICATION_CREDENTIALS "./dummy-mles.json" 
+
+#RUN export GOOGLE_APPLICATION_CREDENTIALS=.alls/dummy-mles.json
+
+# docker build . -t python_test
+# docker tag python_test:latest quynhtl/today_code1
+# docker push quynhtl/today_code1
