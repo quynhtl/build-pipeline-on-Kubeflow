@@ -10,3 +10,5 @@
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mles-dummy-user%40vertical-set-272909.iam.gserviceaccount.com"
 }
+
+// /home/quynhtl/Documents/VinBase/build-pipeline-on-Kubeflow/my_pipeline/dummy-mles.json
