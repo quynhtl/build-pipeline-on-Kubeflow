@@ -34,14 +34,14 @@ def download_data():
   
 download_data()
 
-# import shutil
+import shutil
 
 # Create the new folder
 # os.makedirs("data")
 
-# #move
-# shutil.move("train", "./data/train")
-# shutil.move("validation", "./data/validation")
+#move
+shutil.move("train", "./data/train")
+shutil.move("validation", "./data/validation")
 
 
 
