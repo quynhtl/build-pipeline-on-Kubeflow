@@ -37,7 +37,7 @@ download_data()
 import shutil
 
 # Create the new folder
-# os.makedirs("data")
+# os.makedirs("data")add
 
 #move
 shutil.move("train", "./data/train")
