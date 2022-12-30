@@ -10,7 +10,7 @@ def my_pipeline():
         name='Data Preparation',
         image='quynhtl/today_code1:latest',
         command=['python', 'download.py'],
-        file_outputs = {"output": "./output.tar"}
+        file_outputs = {"output": "/data"}
     )
 
     model_train = dsl.ContainerOp(
@@ -20,7 +20,6 @@ def my_pipeline():
         arguments=['--input-folder', data_prep.output]
     )
     model_train.after(data_prep)
-
 
     # model_version = dsl.ContainerOp(
     #     name='Model Versioning',
