@@ -29,14 +29,21 @@ import argparse
 
 # Parse command line arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('--input_file', required=True, help='Path to the input zip file')
+parser.add_argument('--input_file', required=True, help='Path to the input tar file')
 parser.add_argument('--output_file', required=True, help='Path to the output file')
 args = parser.parse_args()
 
 # Unzip the input file
-import zipfile
-with zipfile.ZipFile(args.input_file, 'r') as zip_ref:
-    zip_ref.extractall('data_input')
+# import zipfile
+# with zipfile.ZipFile(args.input_file, 'r') as zip_ref:
+#     zip_ref.extractall('data_input')
+
+
+import tarfile
+
+with tarfile.open(args.input_file, "r") as tf:
+    tf.extractall()
+
 
 print("done01")
 # Chọn thiết bị để huấn luyện mô hình

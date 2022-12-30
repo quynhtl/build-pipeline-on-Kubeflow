@@ -4,8 +4,8 @@ import schedule #setup time chạy tự động
 import time
 import os
 
-# export GOOGLE_APPLICATION_CREDENTIALS=./dummy-mles.json
-# os.environ['GOOGLE_APPLICATION_CREDENTIALS']='./dummy-mles.json'
+# export GOOGLE_APPLICATION_CREDENTIALS=./my_pipeline/dummy-u.json
+# os.environ['GOOGLE_APPLICATION_CREDENTIALS']='./my_pipeline/dummy-u.json'
 #echo: xem có biến môi trường hay chưa
 
 
@@ -48,17 +48,12 @@ shutil.move("validation", "./data/validation")
 # shutil.copytree("train", "./data/train")
 # shutil.copytree("validation", "./data/validation")
 
-import zipfile
-# Create the zip file
-with zipfile.ZipFile("./output.zip", "w") as zip_file:
-    # Iterate through the files in the first folder
-    for root, dirs, files in os.walk("./data/train"):
-        for file in files:
-            # Add the file to the zip file
-            zip_file.write(os.path.join(root, file))
-    # Iterate through the files in the second folder
-    for root, dirs, files in os.walk("./data/validation"):
-        for file in files:
-            # Add the file to the zip file
-            zip_file.write(os.path.join(root, file))
+import tarfile
+import os.path
+def make_tarfile(output_filename, source_dir):
+    with tarfile.open(output_filename, "w:gz") as tar:
+        tar.add(source_dir, arcname=os.path.basename(source_dir))
+make_tarfile('./output.tar', './data')
+
+
 
