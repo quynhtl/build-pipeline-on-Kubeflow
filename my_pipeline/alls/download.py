@@ -48,12 +48,12 @@ shutil.move("validation", "./data/validation")
 # shutil.copytree("train", "./data/train")
 # shutil.copytree("validation", "./data/validation")
 
-import tarfile
-import os.path
-def make_tarfile(output_filename, source_dir):
-    with tarfile.open(output_filename, "w:gz") as tar:
-        tar.add(source_dir, arcname=os.path.basename(source_dir))
-make_tarfile('./output.tar', './data')
+# import tarfile
+# import os.path
+# def make_tarfile(output_filename, source_dir):
+#     with tarfile.open(output_filename, "w:gz") as tar:
+#         tar.add(source_dir, arcname=os.path.basename(source_dir))
+# make_tarfile('./output.tar', './data')
 
 
 

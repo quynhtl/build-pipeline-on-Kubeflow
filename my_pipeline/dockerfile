@@ -14,7 +14,7 @@ ENV GOOGLE_APPLICATION_CREDENTIALS "./dummy-u.json"
 
 # docker build . -t python_test
 # docker tag python_test:latest quynhtl/today_code1
-# docker push quynhtl/today_code1
+# docker push quynhtl/today_code1x
 
 
 

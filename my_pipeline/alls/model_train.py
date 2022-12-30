@@ -28,10 +28,10 @@ import zipfile
 import argparse
 
 # Parse command line arguments
-parser = argparse.ArgumentParser()
-parser.add_argument('--input_file', required=True, help='Path to the input tar file')
-parser.add_argument('--output_file', required=True, help='Path to the output file')
-args = parser.parse_args()
+# parser = argparse.ArgumentParser()
+# parser.add_argument('--input-folder', required=True, help='Path to the input tar file')
+
+# args = parser.parse_args()
 
 # Unzip the input file
 # import zipfile
@@ -39,19 +39,20 @@ args = parser.parse_args()
 #     zip_ref.extractall('data_input')
 
 
-import tarfile
+# import tarfile
 
-with tarfile.open(args.input_file, "r") as tf:
-    tf.extractall()
+# with tarfile.open(args.input_folder, "r") as tf:
+#     tf.extractall()
 
+data_dir = './data'
 
 print("done01")
 # Chọn thiết bị để huấn luyện mô hình
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 # Tạo list đường dẫn ảnh train
-train_cats_dir = './train/cats'
-train_dogs_dir = './train/dogs'
+train_cats_dir = data_dir + '/train/cats/'
+train_dogs_dir = data_dir + '/train/dogs/'
 
 train_list_dogs = glob.glob(os.path.join(train_cats_dir,'*.jpg'))
 train_list_cats = glob.glob(os.path.join(train_dogs_dir, '*.jpg'))
@@ -59,8 +60,8 @@ train_list_cats = glob.glob(os.path.join(train_dogs_dir, '*.jpg'))
 train_list = train_list_dogs + train_list_cats
 
 # Tạo list đường dẫn ảnh test
-test_cats_dir = './validation/cats'
-test_dogs_dir = './validation/dogs'
+test_cats_dir = data_dir + '/validation/cats/'
+test_dogs_dir = data_dir + '/validation/dogs/'
 
 test_list_dogs = glob.glob(os.path.join(test_cats_dir,'*.jpg'))
 test_list_cats = glob.glob(os.path.join(test_dogs_dir, '*.jpg'))
